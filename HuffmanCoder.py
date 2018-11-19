@@ -12,7 +12,7 @@ from time import *
 
 start=time()
 
-fileName = 'quijote.txt'
+fileName = 'quijote - original.txt'
 
 # CHARACTERS DIVISION
 # OJO avoid codification problems of special characters.
@@ -26,13 +26,9 @@ freq= []
 total =sum(c.values())
 for element in sorted(c.items(),key=lambda pair: pair[1], reverse=True):
     freq.append((element[0],element[1]/total))
-#    print('valor: ', element[0], 'frecuencia; ', element[1])
-    
-    print('num. caracters distints: ', len(c))
-print('num. total de caracters  ', total)
-#print(freq)
+
 probab=dict(freq)
-print('Total probabilitat',sum(probab.values()))
+
 
 def lowest_prob_pair(p):
     '''Return pair of symbols from distribution p with lowest probabilities.'''
@@ -89,6 +85,7 @@ with open('compressed.txt','w',encoding='utf-8') as fout:
     fout.write('Quijote codified')
     fout.write('\n')
 
+
 #Llegim el fitxer i el codificam:
 
     with open(fileName,'r',encoding='utf-8') as fin:
@@ -100,21 +97,20 @@ with open('compressed.txt','w',encoding='utf-8') as fout:
             charlist = ''
             for i in range (len(codelist)):
                 codelist[i] = dictionary[codelist[i]]
-                fout.write(codelist[i])
+                charlist += codelist[i]
+
+            long = len(charlist)
+            extra=int(8-long%8)
+            charlist += '0'*extra
+            for k in range (0,len(charlist),8): #From str to bytes
+                byteArray.append(int(charlist[k:k+8],2))
+            fbytes.write(bytes(byteArray))
                 
-                for j in range (len(codelist[i])):
-                    charlist += (str(codelist[i][j]))
-            print(charlist)        
-            for j in range (0,len(charlist),8): #From str to bytes
-                byteArray.append(int(charlist[i:i+8],2))
-                fbytes.write(bytes(byteArray))
-                
-                
+                             
 fout.close()
 fin.close()
 
 
 
 end=time()
-print ("time coding=", end-start)
-
+print ("time end coding=", end-start)

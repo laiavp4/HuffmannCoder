@@ -12,7 +12,7 @@ from time import *
 
 start=time()
 
-fileName = 'quijote - original.txt'
+fileName = 'quijote.txt'
 
 # CHARACTERS DIVISION
 # OJO avoid codification problems of special characters.
